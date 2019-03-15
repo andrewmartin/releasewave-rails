@@ -164,6 +164,9 @@ GEM
       oauth2 (~> 1.1)
       omniauth (~> 1.2)
     orm_adapter (0.5.0)
+    pg (1.1.4)
+    postgresql (1.0.0)
+      pg
     public_suffix (3.0.2)
     puma (3.11.4)
     rack (2.0.5)
@@ -274,6 +277,7 @@ DEPENDENCIES
   omniauth
   omniauth-facebook
   paperclip!
+  postgresql
   puma (~> 3.7)
   rack-cors
   rails (~> 5.2)
@@ -289,4 +293,4 @@ DEPENDENCIES
   will_paginate
 
 BUNDLED WITH
-   1.16.6
+   2.0.1
