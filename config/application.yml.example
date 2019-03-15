@@ -1,0 +1,12 @@
+ADMIN_PASSWORD: localh0st!
+SECRET_KEY_BASE:
+S3_ACCESS_KEY_ID:
+S3_SECRET_ACCESS_KEY:
+S3_REGION: us-west-2
+S3_BUCKET: releasewaveweb
+S3_HOST_NAME: s3-us-west-2.amazonaws.com
+FACEBOOK_APP_ID:
+FACEBOOK_APP_SECRET:
+
+production:
+  <<: *defaults
