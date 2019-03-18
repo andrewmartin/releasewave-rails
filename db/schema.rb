@@ -10,10 +10,17 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_06_11_193337) do
+ActiveRecord::Schema.define(version: 2019_03_18_183134) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "artist_releases", force: :cascade do |t|
+    t.bigint "artist_id"
+    t.bigint "release_id"
+    t.index ["artist_id"], name: "index_artist_releases_on_artist_id"
+    t.index ["release_id"], name: "index_artist_releases_on_release_id"
+  end
 
   create_table "artists", force: :cascade do |t|
     t.string "name"
@@ -27,7 +34,41 @@ ActiveRecord::Schema.define(version: 2018_06_11_193337) do
     t.string "image_content_type"
     t.integer "image_file_size"
     t.datetime "image_updated_at"
+    t.string "slug"
     t.index ["name"], name: "index_artists_on_name", unique: true
+    t.index ["slug"], name: "index_artists_on_slug", unique: true
+  end
+
+  create_table "artists_releases", id: false, force: :cascade do |t|
+    t.bigint "release_id", null: false
+    t.bigint "artist_id", null: false
+    t.index ["release_id", "artist_id"], name: "index_artists_releases_on_release_id_and_artist_id"
+  end
+
+  create_table "friendly_id_slugs", force: :cascade do |t|
+    t.string "slug", null: false
+    t.integer "sluggable_id", null: false
+    t.string "sluggable_type", limit: 50
+    t.string "scope"
+    t.datetime "created_at"
+    t.index ["slug", "sluggable_type", "scope"], name: "index_friendly_id_slugs_on_slug_and_sluggable_type_and_scope", unique: true
+    t.index ["slug", "sluggable_type"], name: "index_friendly_id_slugs_on_slug_and_sluggable_type"
+    t.index ["sluggable_type", "sluggable_id"], name: "index_friendly_id_slugs_on_sluggable_type_and_sluggable_id"
+  end
+
+  create_table "releases", force: :cascade do |t|
+    t.integer "artist_id"
+    t.string "name"
+    t.text "description"
+    t.date "release_date"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.string "image_file_name"
+    t.string "image_content_type"
+    t.integer "image_file_size"
+    t.datetime "image_updated_at"
+    t.string "slug"
+    t.index ["slug"], name: "index_releases_on_slug", unique: true
   end
 
   create_table "users", force: :cascade do |t|

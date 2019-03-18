@@ -1,29 +1,19 @@
 class Api::ArtistsController < ApplicationController
+  # skip_before_action :verify_authenticity_token
   include DeviseTokenAuth::Concerns::SetUserByToken
-  before_action :authenticate_api_user! #, except: [:index]
+
+  before_action :authenticate_api_user!, except: [:index, :show]
 
   respond_to :html, :json
   before_action :set_artist, only: [:show, :edit, :update, :destroy]
-  skip_before_action :verify_authenticity_token
+
+  def show
+  end
 
   def create
-    if artist_params[:image]
-      picture_params = artist_params[:image]
-      data = picture_params[:data]
-      filename = picture_params[:filename]
-
-      params = artist_params.reject! { |k| k == 'image' }
-      @artist = Artist.new(params)
-
-      image_file = Paperclip.io_adapters.for(data)
-      image_file.original_filename = filename
-      @artist.image                = image_file
-
-      @artist.save!
-    else
-      @artist = Artist.new(artist_params)
-      @artist.save!
-    end
+    params = artist_params.reject! { |k| k == 'image' }
+    @artist = Artist.new(params)
+    @artist.updateWithImage(artist_params)
   end
 
   def edit
@@ -31,20 +21,24 @@ class Api::ArtistsController < ApplicationController
   end
 
   def update
-    @artist.update(artist_params)
-    @artist.save!
+    @artist.updateWithImage(artist_params)
   end
 
   def index
-    @artists = Artist.paginate :page => params[:page]
+    @artists = Artist.search(params[:search]).paginate :page => params[:page]
+  end
+
+  def destroy
+    @artist.destroy!
+    render json: @artist
   end
 
   private
     def set_artist
-      @artist = Artist.find(params[:id])
+      @artist = Artist.friendly.find(params[:id])
     end
 
     def artist_params
-      params.require(:artist).permit(:name, image: [:content_type, :filename, :data])
+      params.require(:artist).permit(:search, :name, :bandcamp, :facebook, :soundcloud, :spotify, image: [:content_type, :filename, :data])
     end
 end

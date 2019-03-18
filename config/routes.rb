@@ -7,6 +7,7 @@ Rails.application.routes.draw do
 
       resources :user, only: [:get, :update, :destroy]
       resources :artists
+      resources :releases
 
       namespace :admin do
         resources 'users', controller: 'admin_users'

@@ -1,13 +1,12 @@
 # == Schema Information
 #
-# Table name: artists
+# Table name: releases
 #
 #  id                 :bigint(8)        not null, primary key
+#  artist_id          :integer
 #  name               :string
-#  bandcamp           :string
-#  facebook           :string
-#  spotify            :string
-#  soundcloud         :string
+#  description        :text
+#  release_date       :date
 #  created_at         :datetime         not null
 #  updated_at         :datetime         not null
 #  image_file_name    :string
@@ -16,15 +15,12 @@
 #  image_updated_at   :datetime
 #
 
-class Artist < ApplicationRecord
+class Release < ApplicationRecord
   extend FriendlyId
   friendly_id :name, use: :slugged
 
   has_many :artist_releases
-  has_many :releases, through: :artist_releases, dependent: :destroy
-
-  # do_not_validate_attachment_file_type :image
-  # validates :bandcamp, :format => URI::regexp(%w(http https))
+  has_many :artists, through: :artist_releases, dependent: :destroy
 
   has_attached_file :image, styles: {
     thumb: '100x100>',
@@ -32,7 +28,6 @@ class Artist < ApplicationRecord
     medium: '300x300>',
     large: '500x500#'
   }
-
   validates_attachment_content_type :image, :content_type => [
     "image/jpg", "image/jpeg", "image/png", "image/gif"
   ]
@@ -40,7 +35,6 @@ class Artist < ApplicationRecord
 
   def updateWithImage(params)
     if params[:image]
-      picture_params = params[:image]
       data = params[:image][:data]
       filename = params[:image][:filename]
 
@@ -51,14 +45,24 @@ class Artist < ApplicationRecord
 
     params = params.reject! { |k| k == 'image' }
     self.update(params)
-    self.save!
+    if self.new_record?
+      self.save!
+    end
+
+    if params[:artist_ids]
+      self.artist_releases.destroy_all
+      params[:artist_ids].each do |artist_id|
+        self.artist_releases.create(artist_id: artist_id)
+      end
+      self.save!
+    end
   end
 
   def self.search(search)
     if search
-      Artist.where('LOWER(name) LIKE ?', "%#{search.downcase}%").order('id DESC')
+      Release.where('LOWER(name) LIKE ?', "%#{search.downcase}%").order('id DESC')
     else
-      Artist.all
+      Release.all
     end
   end
 
