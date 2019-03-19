@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_03_18_183134) do
+ActiveRecord::Schema.define(version: 2019_03_19_185417) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -45,6 +45,12 @@ ActiveRecord::Schema.define(version: 2019_03_18_183134) do
     t.index ["release_id", "artist_id"], name: "index_artists_releases_on_release_id_and_artist_id"
   end
 
+  create_table "embeds", force: :cascade do |t|
+    t.text "content"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "friendly_id_slugs", force: :cascade do |t|
     t.string "slug", null: false
     t.integer "sluggable_id", null: false
@@ -54,6 +60,15 @@ ActiveRecord::Schema.define(version: 2019_03_18_183134) do
     t.index ["slug", "sluggable_type", "scope"], name: "index_friendly_id_slugs_on_slug_and_sluggable_type_and_scope", unique: true
     t.index ["slug", "sluggable_type"], name: "index_friendly_id_slugs_on_slug_and_sluggable_type"
     t.index ["sluggable_type", "sluggable_id"], name: "index_friendly_id_slugs_on_sluggable_type_and_sluggable_id"
+  end
+
+  create_table "release_embeds", force: :cascade do |t|
+    t.bigint "release_id"
+    t.bigint "embed_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["embed_id"], name: "index_release_embeds_on_embed_id"
+    t.index ["release_id"], name: "index_release_embeds_on_release_id"
   end
 
   create_table "releases", force: :cascade do |t|
@@ -69,6 +84,18 @@ ActiveRecord::Schema.define(version: 2019_03_18_183134) do
     t.datetime "image_updated_at"
     t.string "slug"
     t.index ["slug"], name: "index_releases_on_slug", unique: true
+  end
+
+  create_table "reviews", force: :cascade do |t|
+    t.string "name"
+    t.bigint "release_id"
+    t.text "content"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.string "slug"
+    t.integer "user_id"
+    t.index ["release_id"], name: "index_reviews_on_release_id"
+    t.index ["slug"], name: "index_reviews_on_slug", unique: true
   end
 
   create_table "users", force: :cascade do |t|

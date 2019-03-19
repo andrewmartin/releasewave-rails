@@ -15,3 +15,11 @@ puts "creating admin users"
     user.is_admin = true
   end
 end
+
+15.times do
+  r = Release.new({name: Faker::Music.album})
+  r.save!
+  a = Artist.new({name: Faker::Music.album})
+  a.save!
+  r.artist_releases.create(artist_id: a.id)
+end

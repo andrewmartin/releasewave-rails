@@ -1,28 +1,29 @@
 class Api::Admin::AdminUsersController < ApplicationController
+  include DeviseTokenAuth::Concerns::SetUserByToken
+
   respond_to :html, :json
 
   before_action :set_user, only: [:show, :update, :destroy]
-  before_action :set_current_api_user
-  before_action :check_if_admin
+  before_action :authenticate_api_user!, except: [:index, :show]
 
   def index
     @users = User.all
-    puts @users.inspect
-    respond_with(@users)
+    render template: 'api/users/index'
   end
 
   def show
     @user = User.find(params[:id])
+    render template: 'api/users/show'
   end
 
   def new
     @user = User.new
-    respond_with(@user)
+    render template: 'api/users/create'
   end
 
   def update
     @user.update(user_params)
-    respond_with(@user)
+    render template: 'api/users/update'
   end
 
   def destroy
@@ -35,12 +36,7 @@ class Api::Admin::AdminUsersController < ApplicationController
       @user = User.find(params[:id])
     end
 
-    def city_params
-      params.require(:city).permit([:id])
-    end
-
     def user_params
-      params.require(:user).permit([:price, :start_date])
+      params.require(:user).permit(:name)
     end
-
 end

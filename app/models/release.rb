@@ -13,14 +13,22 @@
 #  image_content_type :string
 #  image_file_size    :integer
 #  image_updated_at   :datetime
+#  slug               :string
 #
 
 class Release < ApplicationRecord
   extend FriendlyId
   friendly_id :name, use: :slugged
 
+  default_scope { order(release_date: :asc) }
+
   has_many :artist_releases
   has_many :artists, through: :artist_releases, dependent: :destroy
+
+  has_many :release_embeds
+  has_many :embeds, through: :release_embeds, dependent: :destroy
+
+  has_many :reviews
 
   has_attached_file :image, styles: {
     thumb: '100x100>',
@@ -33,7 +41,14 @@ class Release < ApplicationRecord
   ]
   validates :name, presence: true, uniqueness: true
 
-  def updateWithImage(params)
+  def updateOrCreate(params)
+    if params[:embed_code]
+      self.embeds.destroy_all
+      params[:embed_code].each do |content|
+        self.embeds.create!(content: content)
+      end
+    end
+
     if params[:image]
       data = params[:image][:data]
       filename = params[:image][:filename]
@@ -43,19 +58,21 @@ class Release < ApplicationRecord
       self.image = image_file
     end
 
-    params = params.reject! { |k| k == 'image' }
-    self.update(params)
+    # params = params.reject! { |k| k == 'image' }
+    updateParams = params.reject! { |k| k == 'image' || 'embed_code' }
+    self.update(updateParams)
     if self.new_record?
       self.save!
     end
+
 
     if params[:artist_ids]
       self.artist_releases.destroy_all
       params[:artist_ids].each do |artist_id|
         self.artist_releases.create(artist_id: artist_id)
       end
-      self.save!
     end
+
   end
 
   def self.search(search)

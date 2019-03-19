@@ -10,7 +10,7 @@ class Api::ReleasesController < ApplicationController
   def create
     params = release_params.reject! { |k| k == 'image' }
     @release = Release.new(params)
-    @release.updateWithImage(release_params)
+    @release.updateOrCreate(release_params)
   end
 
   def edit
@@ -18,7 +18,7 @@ class Api::ReleasesController < ApplicationController
   end
 
   def update
-    @release.updateWithImage(release_params)
+    @release.updateOrCreate(release_params)
   end
 
   def index
@@ -36,7 +36,7 @@ class Api::ReleasesController < ApplicationController
     end
 
     def release_params
-      params.require(:release).permit(:name, :search, :release_date, :description, image: [:content_type, :filename, :data], :artist_ids => [])
+      params.require(:release).permit(:name, :search, :release_date, :description, image: [:content_type, :filename, :data], :artist_ids => [], :embed_code => [])
     end
 end
 
