@@ -11,7 +11,7 @@ class Api::ArtistsController < ApplicationController
   end
 
   def create
-    params = artist_params.reject! { |k| k == 'image' }
+    params = artist_params.except(*[:image])
     @artist = Artist.new(params)
     @artist.updateWithImage(artist_params)
   end

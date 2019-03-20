@@ -42,13 +42,6 @@ class Release < ApplicationRecord
   validates :name, presence: true, uniqueness: true
 
   def updateOrCreate(params)
-    if params[:embed_code]
-      self.embeds.destroy_all
-      params[:embed_code].each do |content|
-        self.embeds.create!(content: content)
-      end
-    end
-
     if params[:image]
       data = params[:image][:data]
       filename = params[:image][:filename]
@@ -58,18 +51,21 @@ class Release < ApplicationRecord
       self.image = image_file
     end
 
-    # params = params.reject! { |k| k == 'image' }
-    updateParams = params.reject! { |k| k == 'image' || 'embed_code' }
+    updateParams = params.except(*[:image, :embed_code, :artist_ids])
     self.update(updateParams)
-    if self.new_record?
-      self.save!
-    end
-
+    self.save!
 
     if params[:artist_ids]
       self.artist_releases.destroy_all
       params[:artist_ids].each do |artist_id|
         self.artist_releases.create(artist_id: artist_id)
+      end
+    end
+
+    if params[:embed_code]
+      self.embeds.destroy_all
+      params[:embed_code].each do |content|
+        self.embeds.create!(content: content)
       end
     end
 

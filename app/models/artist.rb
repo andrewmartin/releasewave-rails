@@ -50,7 +50,7 @@ class Artist < ApplicationRecord
       self.image = image_file
     end
 
-    params = params.reject! { |k| k == 'image' }
+    params = params.except(*[:image])
     self.update(params)
     self.save!
   end

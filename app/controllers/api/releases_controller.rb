@@ -8,7 +8,7 @@ class Api::ReleasesController < ApplicationController
   # skip_before_action :verify_authenticity_token
 
   def create
-    params = release_params.reject! { |k| k == 'image' }
+    params = release_params.except(*[:image, :embed_code, :artist_ids])
     @release = Release.new(params)
     @release.updateOrCreate(release_params)
   end
