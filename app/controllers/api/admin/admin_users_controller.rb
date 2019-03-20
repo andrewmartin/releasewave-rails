@@ -22,7 +22,7 @@ class Api::Admin::AdminUsersController < ApplicationController
   end
 
   def update
-    @user.update(user_params)
+    @user.updateWithImage(user_params)
     render template: 'api/users/update'
   end
 
@@ -37,6 +37,6 @@ class Api::Admin::AdminUsersController < ApplicationController
     end
 
     def user_params
-      params.require(:user).permit(:name)
+      params.require(:user).permit(:name, image: [:content_type, :filename, :data])
     end
 end

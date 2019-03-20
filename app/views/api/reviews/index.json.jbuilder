@@ -6,7 +6,7 @@ json.items do
     json.merge! item.attributes
     json.user do
       json.id item.user.id
-      json.image item.user.image
+      json.image item.user.image.url(:large)
       json.email item.user.email
       json.name item.user.name
     end

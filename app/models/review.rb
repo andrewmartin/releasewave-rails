@@ -14,6 +14,8 @@ class Review < ApplicationRecord
   extend FriendlyId
   friendly_id :name, use: :slugged
 
+  default_scope { order(created_at: :desc) }
+
   belongs_to :release
   belongs_to :user
 

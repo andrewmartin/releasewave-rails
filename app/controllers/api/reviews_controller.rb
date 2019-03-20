@@ -4,7 +4,7 @@ class Api::ReviewsController < ApplicationController
   before_action :authenticate_api_user!, except: [:index, :show]
 
   respond_to :html, :json
-  before_action :set_release, except: [:index]
+  before_action :set_release
   before_action :set_review, only: [:update, :show, :destroy]
   before_action :require_permission, only: [:edit, :update, :destroy]
 
@@ -25,7 +25,7 @@ class Api::ReviewsController < ApplicationController
   end
 
   def index
-    @reviews = Review.paginate :page => params[:page]
+    @reviews = @release.reviews.paginate :page => params[:page]
   end
 
   def destroy

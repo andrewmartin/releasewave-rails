@@ -36,4 +36,32 @@ class User < ActiveRecord::Base
 
   has_many :reviews
 
+  has_attached_file :image, styles: {
+    thumb: '100x100>',
+    square: '200x200#',
+    medium: '300x300>',
+    large: '500x500#'
+  }
+
+  validates_attachment_content_type :image, :content_type => [
+    "image/jpg", "image/jpeg", "image/png", "image/gif"
+  ]
+
+  def updateWithImage(params)
+    if params[:image]
+      picture_params = params[:image]
+      data = params[:image][:data]
+      filename = params[:image][:filename]
+
+      image_file = Paperclip.io_adapters.for(data)
+      image_file.original_filename = filename
+      self.image = image_file
+    end
+
+    params = params.reject! { |k| k == 'image' }
+
+    self.update(params)
+    self.save!
+  end
+
 end
