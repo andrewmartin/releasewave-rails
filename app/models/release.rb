@@ -39,7 +39,7 @@ class Release < ApplicationRecord
   validates_attachment_content_type :image, :content_type => [
     "image/jpg", "image/jpeg", "image/png", "image/gif"
   ]
-  validates :name, presence: true, uniqueness: true
+  validates :name, presence: true
 
   def updateOrCreate(params)
     if params[:image]
