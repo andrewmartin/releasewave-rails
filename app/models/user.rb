@@ -21,12 +21,15 @@
 #  unconfirmed_email      :string
 #  name                   :string
 #  nickname               :string
-#  image                  :string
 #  email                  :string
 #  tokens                 :text
 #  created_at             :datetime         not null
 #  updated_at             :datetime         not null
 #  is_admin               :boolean
+#  image_file_name        :string
+#  image_content_type     :string
+#  image_file_size        :bigint(8)
+#  image_updated_at       :datetime
 #
 
 class User < ActiveRecord::Base
@@ -40,7 +43,11 @@ class User < ActiveRecord::Base
     thumb: '100x100>',
     square: '200x200#',
     medium: '300x300>',
-    large: '500x500#'
+    large: '500x500#',
+    :convert_options => {
+      :thumb => "-quality 90 -strip",
+      :large => "-quality 95 -strip",
+    }
   }
 
   validates_attachment_content_type :image, :content_type => [
