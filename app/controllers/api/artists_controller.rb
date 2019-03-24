@@ -39,6 +39,6 @@ class Api::ArtistsController < ApplicationController
     end
 
     def artist_params
-      params.require(:artist).permit(:search, :website, :name, :bandcamp, :facebook, :soundcloud, :spotify, :youtube, :itunes, :twitter, image: [:content_type, :filename, :data], :short_description)
+      params.require(:artist).permit(:short_description, :search, :website, :name, :bandcamp, :facebook, :soundcloud, :spotify, :youtube, :itunes, :twitter, image: [:content_type, :filename, :data])
     end
 end

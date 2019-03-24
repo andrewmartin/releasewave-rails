@@ -36,7 +36,7 @@ class Api::ReleasesController < ApplicationController
     end
 
     def release_params
-      params.require(:release).permit(:name, :search, :buy, :release_date, :description, image: [:content_type, :filename, :data], :artist_ids => [], :embed_code => [])
+      params.require(:release).permit(:name, :search, :buy, :release_date, :description, :short_description, image: [:content_type, :filename, :data], :artist_ids => [], :embed_code => [])
     end
 end
 
