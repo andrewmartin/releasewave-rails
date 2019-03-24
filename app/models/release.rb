@@ -14,8 +14,8 @@
 #  image_file_size    :integer
 #  image_updated_at   :datetime
 #  slug               :string
-#  website            :string
 #  buy                :string
+#  short_description  :text
 #
 
 class Release < ApplicationRecord

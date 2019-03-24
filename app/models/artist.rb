@@ -15,6 +15,10 @@
 #  image_file_size    :integer
 #  image_updated_at   :datetime
 #  slug               :string
+#  website            :string
+#  youtube            :string
+#  itunes             :string
+#  twitter            :string
 #
 
 class Artist < ApplicationRecord

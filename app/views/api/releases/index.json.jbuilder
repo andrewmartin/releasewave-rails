@@ -4,6 +4,7 @@ json.current_page @releases.current_page
 json.items do
   json.array! @releases do |item|
     json.merge! item.attributes
+    json.short_description item.short_description
 
     json.image do
       json.full item.image.url(:original)
