@@ -16,10 +16,34 @@ puts "creating admin users"
   end
 end
 
-15.times do
-  r = Release.new({name: Faker::Music.album})
+Release.destroy_all
+Artist.destroy_all
+
+50.times do
+  r = Release.new({name: Faker::Music.unique.album,
+    description: '<p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Nisi, eius accusamus minima quos perspiciatis at sed, illum dolorum delectus ut eaque tempora nesciunt maxime sint totam maiores aliquid placeat harum!</p>',
+    buy: '#',
+    release_date: Faker::Date.forward(90),
+    featured: [true, false].sample
+  })
+
   r.save!
-  a = Artist.new({name: Faker::Music.album})
+
+  embed = '<iframe width="560" height="315" src="https://www.youtube.com/embed/m-ivNAPbHTQ" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>'
+  r.embeds.create!(content: embed)
+
+  r.save!
+
+  a = Artist.new({
+    name: Faker::Music.unique.band,
+    facebook: '#',
+    spotify: '#',
+    soundcloud: '#',
+    website: '#',
+    youtube: '#',
+    itunes: '#',
+    twitter: '#',
+  })
   a.save!
   r.artist_releases.create(artist_id: a.id)
 end
