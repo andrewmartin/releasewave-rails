@@ -8,8 +8,6 @@ class Api::ReviewsController < ApplicationController
   before_action :set_review, only: [:update, :show, :destroy]
   before_action :require_permission, only: [:edit, :update, :destroy]
 
-  # skip_before_action :verify_authenticity_token
-
   def create
     @review = @release.reviews.new(review_params)
     @review.user = current_api_user

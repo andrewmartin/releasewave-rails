@@ -5,7 +5,6 @@ class Api::ReleasesController < ApplicationController
 
   respond_to :html, :json
   before_action :set_release, only: [:show, :edit, :update, :destroy]
-  # skip_before_action :verify_authenticity_token
 
   def create
     params = release_params.except(*[:image, :embed_code, :artist_ids])

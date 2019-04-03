@@ -28,9 +28,6 @@ class Artist < ApplicationRecord
   has_many :artist_releases
   has_many :releases, through: :artist_releases, dependent: :destroy
 
-  # do_not_validate_attachment_file_type :image
-  # validates :bandcamp, :format => URI::regexp(%w(http https))
-
   has_attached_file :image, styles: {
     thumb: '100x100>',
     square: '200x200#',
