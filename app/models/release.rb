@@ -22,7 +22,7 @@ class Release < ApplicationRecord
   extend FriendlyId
   friendly_id :name, use: :slugged
 
-  default_scope { order(release_date: :asc) }
+  default_scope { order(release_date: :desc) }
 
   has_many :artist_releases
   has_many :artists, through: :artist_releases, dependent: :destroy
