@@ -16,16 +16,21 @@ puts "creating admin users"
   end
 end
 
-Release.destroy_all
-Artist.destroy_all
+# Release.destroy_all
+# Artist.destroy_all
 
-50.times do
-  r = Release.new({name: Faker::Music.unique.album,
+5.times do
+  release_date = Faker::Date.forward([*15..90].sample)
+  name = Faker::Music.unique.album
+  r = Release.new({
+    name: name,
     description: '<p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Nisi, eius accusamus minima quos perspiciatis at sed, illum dolorum delectus ut eaque tempora nesciunt maxime sint totam maiores aliquid placeat harum!</p>',
     buy: '#',
-    release_date: Faker::Date.forward(90),
+    release_date: release_date,
     featured: [true, false].sample
   })
+
+  puts "creating release: #{name} for #{release_date}"
 
   r.save!
 
@@ -35,7 +40,7 @@ Artist.destroy_all
   r.save!
 
   a = Artist.new({
-    name: Faker::Music.unique.band,
+    name: Faker::Name.unique.name,
     facebook: '#',
     spotify: '#',
     soundcloud: '#',
