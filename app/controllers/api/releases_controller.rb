@@ -21,7 +21,7 @@ class Api::ReleasesController < ApplicationController
   end
 
   def index
-    @releases = Release.where("release_date >= ?", Date.today).paginate :page => params[:page]
+    @releases = Release.paginate :page => params[:page]
   end
 
   def destroy
