@@ -20,10 +20,11 @@ Release.destroy_all
 Artist.destroy_all
 
 50.times do
-  r = Release.new({name: Faker::Music.unique.album,
+  r = Release.new({
+    name: Faker::Music.unique.album,
     description: '<p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Nisi, eius accusamus minima quos perspiciatis at sed, illum dolorum delectus ut eaque tempora nesciunt maxime sint totam maiores aliquid placeat harum!</p>',
     buy: '#',
-    release_date: Faker::Date.forward(90),
+    release_date: Faker::Date.forward([*5..95].sample),
     featured: [true, false].sample
   })
 
@@ -46,4 +47,6 @@ Artist.destroy_all
   })
   a.save!
   r.artist_releases.create(artist_id: a.id)
+
+  puts "created release for #{r.release_date} named #{r.name}"
 end
