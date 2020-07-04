@@ -13,7 +13,8 @@ module ReleasewaveRails
     config.action_controller.forgery_protection_origin_check = false
     config.middleware.insert_before 0, Rack::Cors do
       allow do
-        origins '*'
+        origins 'http:\/\/localhost:(.*)', 'https://releasewave.com', 'https://www.releasewave.com', /\Ahttp:\/\/localhost:(.*)\z/
+
         resource '*', :headers => :any, :methods => [:get, :post, :delete, :put, :patch, :options, :head], :expose  => ['uid', 'client', 'expiry', 'access-token', 'token-type']
       end
     end

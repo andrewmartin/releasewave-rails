@@ -28,6 +28,10 @@ class Api::ReleasesController < ApplicationController
     end
   end
 
+  def search
+
+  end
+
   def destroy
     @release.destroy!
     render json: @release
