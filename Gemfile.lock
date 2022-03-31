@@ -190,7 +190,8 @@ GEM
     postgresql (1.0.0)
       pg
     public_suffix (3.0.3)
-    puma (3.12.0)
+    puma (5.6.4)
+      nio4r (~> 2.0)
     rack (2.0.6)
     rack-cors (1.0.2)
     rack-test (1.1.0)
@@ -317,7 +318,7 @@ DEPENDENCIES
   omniauth-facebook
   paperclip!
   postgresql
-  puma (~> 3.7)
+  puma (~> 5.6)
   rack-cors
   rails (~> 5.2)
   sass-rails (~> 5.0)
