@@ -12,13 +12,15 @@
 #  updated_at         :datetime         not null
 #  image_file_name    :string
 #  image_content_type :string
-#  image_file_size    :integer
+#  image_file_size    :bigint(8)
 #  image_updated_at   :datetime
 #  slug               :string
 #  website            :string
 #  youtube            :string
 #  itunes             :string
 #  twitter            :string
+#  short_description  :text
+#  instagram          :string
 #
 
 require 'test_helper'

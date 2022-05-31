@@ -30,6 +30,7 @@ gem 'jbuilder', '~> 2.5'
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
 gem 'friendly_id'
+gem 'httparty'
 
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
@@ -43,8 +44,10 @@ gem 'figaro'
 gem 'will_paginate'
 gem "aws-sdk-s3", require: false
 gem 'mini_magick'
-gem "paperclip", git: "git://github.com/thoughtbot/paperclip.git"
+gem "paperclip", git: "https://github.com/thoughtbot/paperclip.git"
+gem 'mimemagic', github: 'mimemagicrb/mimemagic', ref: '01f92d86d15d85cfd0f20dabd025dcbd36a8a60f'
 gem 'annotate'
+
 
 
 group :development, :test do
