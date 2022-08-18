@@ -9,3 +9,4 @@ class Api::ArtistSearchController < ApplicationController
     render :json => @response
   end
 end
+
