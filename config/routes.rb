@@ -5,7 +5,11 @@ Rails.application.routes.draw do
 
   namespace :api do
     scope :v1 do
-      mount_devise_token_auth_for 'User', at: 'auth', controllers: { omniauth_callbacks: "users/omniauth_callbacks" }
+      mount_devise_token_auth_for 'User', at: 'auth', controllers: {
+         omniauth_callbacks: "users/omniauth_callbacks"
+      }
+
+      get 'current_user', to: 'user#current_user'
 
       resources :user, only: [:get, :update, :destroy]
       get 'search/:query', to: 'search#search'
