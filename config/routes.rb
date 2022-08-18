@@ -12,8 +12,6 @@ Rails.application.routes.draw do
       get 'current_user', to: 'user#current_user'
       get "artist-search/:search", to: "artist_search#get"
 
-      mount_devise_token_auth_for "User", at: "auth", controllers: { omniauth_callbacks: "users/omniauth_callbacks" }
-
       resources :user, only: [:get, :update, :destroy]
       get "search/:query", to: "search#search"
       resources :artists
