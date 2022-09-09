@@ -24,7 +24,7 @@ class Release < ApplicationRecord
   friendly_id :name, use: :slugged
 
   scope :ranged, -> (start_date, end_date) {
-    where(start_date..end_date) if start_date.present? and end_date.present?
+    where(release_date: start_date..end_date) if start_date.present? and end_date.present?
   }
 
   scope :featured, -> (featured) {
