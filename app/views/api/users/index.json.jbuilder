@@ -2,6 +2,7 @@ json.items do
   json.array! @users do |user|
     json.id user.id
     json.name user.name
+    json.name user.email
     json.image do
       json.full user.image.url(:original)
       json.thumb user.image.url(:thumb)

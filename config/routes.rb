@@ -10,10 +10,14 @@ Rails.application.routes.draw do
       }
 
       get 'current_user', to: 'user#current_user'
+      get 'users', to: 'user#index'
       get "artist-search/:search", to: "artist_search#get"
 
       resources :user, only: [:get, :update, :destroy]
       get "search/:query", to: "search#search"
+
+      get 'artists/:artistSlug/releases', to: "artists#releases"
+
       resources :artists
       resources :releases do
         resources :reviews

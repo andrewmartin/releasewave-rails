@@ -48,8 +48,7 @@ gem 'mini_magick'
 gem "paperclip", git: "https://github.com/thoughtbot/paperclip.git"
 gem 'mimemagic', github: 'mimemagicrb/mimemagic', ref: '01f92d86d15d85cfd0f20dabd025dcbd36a8a60f'
 gem 'annotate'
-
-
+gem 'rake'
 
 group :development, :test do
   gem 'faker', :git => 'https://github.com/stympy/faker.git', :branch => 'master'

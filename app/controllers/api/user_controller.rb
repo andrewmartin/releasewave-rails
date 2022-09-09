@@ -4,6 +4,10 @@ class Api::UserController < ApplicationController
   respond_to :html, :json
   before_action :set_current_api_user, only: [:current_user]
 
+  def index
+    @users = User.where(is_admin: true)
+  end
+
   def current_user
     @currentUser = current_api_user
     @errorText = 'You must be logged in to view this resource.'

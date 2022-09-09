@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_05_31_011207) do
+ActiveRecord::Schema.define(version: 2022_09_07_032721) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -32,7 +32,7 @@ ActiveRecord::Schema.define(version: 2022_05_31_011207) do
     t.datetime "updated_at", null: false
     t.string "image_file_name"
     t.string "image_content_type"
-    t.bigint "image_file_size"
+    t.integer "image_file_size"
     t.datetime "image_updated_at"
     t.string "slug"
     t.string "website"
@@ -86,7 +86,7 @@ ActiveRecord::Schema.define(version: 2022_05_31_011207) do
     t.datetime "updated_at", null: false
     t.string "image_file_name"
     t.string "image_content_type"
-    t.bigint "image_file_size"
+    t.integer "image_file_size"
     t.datetime "image_updated_at"
     t.string "slug"
     t.string "buy"
@@ -103,6 +103,7 @@ ActiveRecord::Schema.define(version: 2022_05_31_011207) do
     t.datetime "updated_at", null: false
     t.string "slug"
     t.integer "user_id"
+    t.string "score"
     t.index ["release_id"], name: "index_reviews_on_release_id"
     t.index ["slug"], name: "index_reviews_on_slug", unique: true
   end

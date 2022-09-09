@@ -5,3 +5,7 @@ json.image do
   json.square @release.image.url(:square)
   json.large @release.image.url(:large)
 end
+json.test 'test'
+json.artists do
+  json.array! @release.artists
+end

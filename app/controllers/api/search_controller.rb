@@ -4,7 +4,6 @@ class Api::SearchController < ApplicationController
     def search
       @releases = Release.search(params[:query]).paginate :page => params[:page]
       @artists = Artist.search(params[:query]).paginate :page => params[:page]
-    +
       render :search
     end
 end

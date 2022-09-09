@@ -10,6 +10,7 @@
 #  updated_at :datetime         not null
 #  slug       :string
 #  user_id    :integer
+#  score      :integer
 #
 
 require 'test_helper'
