@@ -22,16 +22,16 @@ class Api::ReleasesController < ApplicationController
 
   def index
     @releases = Release.ranged(
-        params[:start_date],
-        params[:end_date]
+      params[:start_date],
+      params[:end_date]
     )
-    .featured(params[:featured])
-    .orderByReleaseDate
-    .paginate :page => params[:page]
+      .featured(params[:featured])
+      .orderByReleaseDate
+      .byPage(params[:per_page], params[:page])
+    #   .byName(params[:name])
   end
 
   def search
-
   end
 
   def destroy
@@ -40,12 +40,12 @@ class Api::ReleasesController < ApplicationController
   end
 
   private
-    def set_release
-      @release = Release.friendly.find(params[:id])
-    end
 
-    def release_params
-      params.require(:release).permit(:name, :featured, :search, :buy, :release_date, :description, :short_description, image: [:content_type, :filename, :data], :artist_ids => [], :embed_code => [])
-    end
+  def set_release
+    @release = Release.friendly.find(params[:id])
+  end
+
+  def release_params
+    params.require(:release).permit(:name, :featured, :search, :buy, :release_date, :description, :short_description, image: [:content_type, :filename, :data], :artist_ids => [], :embed_code => [])
+  end
 end
-

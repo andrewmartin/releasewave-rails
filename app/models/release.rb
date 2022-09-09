@@ -23,13 +23,21 @@ class Release < ApplicationRecord
   extend FriendlyId
   friendly_id :name, use: :slugged
 
-  scope :ranged, -> (start_date, end_date) {
-    where(release_date: start_date..end_date) if start_date.present? and end_date.present?
-  }
+  scope :ranged, ->(start_date, end_date) {
+          where(release_date: start_date..end_date) if start_date.present? and end_date.present?
+        }
 
-  scope :featured, -> (featured) {
-    where(featured: [featured]) if featured.present?
-  }
+  scope :featured, ->(featured) {
+          where(featured: [featured]) if featured.present?
+        }
+
+  scope :byPage, ->(perPage, page) {
+          paginate(per_page: perPage, page: page)
+        }
+
+  scope :byName, ->(name) {
+          where("LOWER(name) LIKE ?", "%#{name.downcase}%") if name.present?
+        }
 
   scope :orderByReleaseDate, -> { order(release_date: :desc) }
   scope :orderByReleaseDateReversed, -> { order(release_date: :asc) }
@@ -43,14 +51,14 @@ class Release < ApplicationRecord
   has_many :reviews
 
   has_attached_file :image, styles: {
-    thumb: '100x100>',
-    square: '200x200#',
-    medium: '300x300>',
-    large: '500x500#'
-  }
+                              thumb: "100x100>",
+                              square: "200x200#",
+                              medium: "300x300>",
+                              large: "500x500#",
+                            }
   validates_attachment_content_type :image, :content_type => [
-    "image/jpg", "image/jpeg", "image/png", "image/gif"
-  ]
+                                              "image/jpg", "image/jpeg", "image/png", "image/gif",
+                                            ]
   validates :name, presence: true
 
   def updateOrCreate(params)
@@ -80,12 +88,11 @@ class Release < ApplicationRecord
         self.embeds.create!(content: content)
       end
     end
-
   end
 
   def self.search(search)
     if search
-      Release.where('LOWER(name) LIKE ?', "%#{search.downcase}%").order('id DESC')
+      Release.where("LOWER(name) LIKE ?", "%#{search.downcase}%").order("id DESC")
     else
       Release.all
     end

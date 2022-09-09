@@ -25,11 +25,11 @@ json.items do
       end
     end
 
-    json.embeds do
-      json.array! item.embeds do |embed|
-        json.merge! embed.attributes
-      end
-    end
+    # json.embeds do
+    #   json.array! item.embeds do |embed|
+    #     json.merge! embed.attributes
+    #   end
+    # end
 
   end
 end
