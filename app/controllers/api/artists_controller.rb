@@ -25,7 +25,9 @@ class Api::ArtistsController < ApplicationController
   end
 
   def index
-    @artists = Artist.search(params[:search]).paginate :page => params[:page]
+    @artists = Artist
+      .search(params[:search])
+      .orderByUpdated.paginate :page => params[:page]
   end
 
   def releases
@@ -39,11 +41,12 @@ class Api::ArtistsController < ApplicationController
   end
 
   private
-    def set_artist
-      @artist = Artist.friendly.find(params[:id])
-    end
 
-    def artist_params
-      params.require(:artist).permit(:short_description, :search, :website, :name, :bandcamp, :facebook, :soundcloud, :spotify, :youtube, :itunes, :twitter, image: [:content_type, :filename, :data])
-    end
+  def set_artist
+    @artist = Artist.friendly.find(params[:id])
+  end
+
+  def artist_params
+    params.require(:artist).permit(:short_description, :search, :website, :name, :bandcamp, :facebook, :soundcloud, :spotify, :youtube, :itunes, :twitter, image: [:content_type, :filename, :data])
+  end
 end

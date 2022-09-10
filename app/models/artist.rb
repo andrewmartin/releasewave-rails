@@ -27,19 +27,21 @@ class Artist < ApplicationRecord
   extend FriendlyId
   friendly_id :name, use: :slugged
 
+  scope :orderByUpdated, -> { order(updated_at: :desc) }
+
   has_many :artist_releases
   has_many :releases, through: :artist_releases, dependent: :destroy
 
   has_attached_file :image, styles: {
-    thumb: '100x100>',
-    square: '200x200#',
-    medium: '300x300>',
-    large: '500x500#'
-  }
+                              thumb: "100x100>",
+                              square: "200x200#",
+                              medium: "300x300>",
+                              large: "500x500#",
+                            }
 
   validates_attachment_content_type :image, :content_type => [
-    "image/jpg", "image/jpeg", "image/png", "image/gif"
-  ]
+                                              "image/jpg", "image/jpeg", "image/png", "image/gif",
+                                            ]
   validates :name, presence: true, uniqueness: true
 
   def updateWithImage(params)
@@ -60,7 +62,7 @@ class Artist < ApplicationRecord
 
   def self.search(search)
     if search
-      Artist.where('LOWER(name) LIKE ?', "%#{search.downcase}%").order('id DESC')
+      Artist.where("LOWER(name) LIKE ?", "%#{search.downcase}%").order("id DESC")
     else
       Artist.all
     end
