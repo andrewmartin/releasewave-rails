@@ -25,6 +25,8 @@ Rails.application.routes.draw do
       resources :releases do
         resources :reviews
       end
+      resources :tags
+      resources :articles
 
       namespace :admin do
         resources "users", controller: "admin_users"

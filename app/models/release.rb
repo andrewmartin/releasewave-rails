@@ -23,6 +23,8 @@ class Release < ApplicationRecord
   extend FriendlyId
   friendly_id :name, use: :slugged
 
+  has_many :tags
+
   scope :ranged, ->(start_date, end_date) {
           where(release_date: start_date..end_date) if start_date.present? and end_date.present?
         }

@@ -3,7 +3,7 @@ class Api::ReleasesController < ApplicationController
 
   before_action :authenticate_api_user!, except: [:index, :show]
 
-  respond_to :html, :json
+  respond_to :json
   before_action :set_release, only: [:show, :edit, :update, :destroy]
 
   def create

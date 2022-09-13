@@ -10,16 +10,19 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_09_10_081325) do
+ActiveRecord::Schema.define(version: 2022_09_12_011216) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
   create_table "articles", force: :cascade do |t|
     t.string "title"
-    t.string "content"
+    t.string "type"
+    t.text "content"
+    t.bigint "artist_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["artist_id"], name: "index_articles_on_artist_id"
   end
 
   create_table "artist_releases", force: :cascade do |t|
@@ -119,6 +122,16 @@ ActiveRecord::Schema.define(version: 2022_09_10_081325) do
     t.string "score"
     t.index ["release_id"], name: "index_reviews_on_release_id"
     t.index ["slug"], name: "index_reviews_on_slug", unique: true
+  end
+
+  create_table "tags", force: :cascade do |t|
+    t.string "name"
+    t.bigint "artist_id"
+    t.bigint "release_id"
+    t.bigint "article_id"
+    t.index ["article_id"], name: "index_tags_on_article_id"
+    t.index ["artist_id"], name: "index_tags_on_artist_id"
+    t.index ["release_id"], name: "index_tags_on_release_id"
   end
 
   create_table "users", force: :cascade do |t|
