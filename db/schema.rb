@@ -10,19 +10,18 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_09_12_011216) do
+ActiveRecord::Schema.define(version: 2022_09_15_220040) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
   create_table "articles", force: :cascade do |t|
     t.string "title"
-    t.string "type"
-    t.text "content"
-    t.bigint "artist_id"
+    t.string "content"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["artist_id"], name: "index_articles_on_artist_id"
+    t.string "slug"
+    t.index ["slug"], name: "index_articles_on_slug", unique: true
   end
 
   create_table "artist_releases", force: :cascade do |t|
@@ -42,7 +41,7 @@ ActiveRecord::Schema.define(version: 2022_09_12_011216) do
     t.datetime "updated_at", null: false
     t.string "image_file_name"
     t.string "image_content_type"
-    t.integer "image_file_size"
+    t.bigint "image_file_size"
     t.datetime "image_updated_at"
     t.string "slug"
     t.string "website"
@@ -82,6 +81,7 @@ ActiveRecord::Schema.define(version: 2022_09_12_011216) do
     t.integer "featured_date_window_before"
     t.integer "featured_date_window_after"
     t.string "name"
+    t.binary "data"
   end
 
   create_table "release_embeds", force: :cascade do |t|
@@ -102,7 +102,7 @@ ActiveRecord::Schema.define(version: 2022_09_12_011216) do
     t.datetime "updated_at", null: false
     t.string "image_file_name"
     t.string "image_content_type"
-    t.integer "image_file_size"
+    t.bigint "image_file_size"
     t.datetime "image_updated_at"
     t.string "slug"
     t.string "buy"
@@ -124,14 +124,26 @@ ActiveRecord::Schema.define(version: 2022_09_12_011216) do
     t.index ["slug"], name: "index_reviews_on_slug", unique: true
   end
 
+  create_table "shared_tags", force: :cascade do |t|
+    t.bigint "artist_id"
+    t.bigint "release_id"
+    t.bigint "article_id"
+    t.integer "tag_id"
+    t.index ["article_id"], name: "index_shared_tags_on_article_id"
+    t.index ["artist_id"], name: "index_shared_tags_on_artist_id"
+    t.index ["release_id"], name: "index_shared_tags_on_release_id"
+  end
+
   create_table "tags", force: :cascade do |t|
     t.string "name"
     t.bigint "artist_id"
     t.bigint "release_id"
     t.bigint "article_id"
+    t.string "slug"
     t.index ["article_id"], name: "index_tags_on_article_id"
     t.index ["artist_id"], name: "index_tags_on_artist_id"
     t.index ["release_id"], name: "index_tags_on_release_id"
+    t.index ["slug"], name: "index_tags_on_slug", unique: true
   end
 
   create_table "users", force: :cascade do |t|
@@ -168,4 +180,7 @@ ActiveRecord::Schema.define(version: 2022_09_12_011216) do
     t.index ["uid", "provider"], name: "index_users_on_uid_and_provider", unique: true
   end
 
+  add_foreign_key "shared_tags", "articles"
+  add_foreign_key "shared_tags", "artists"
+  add_foreign_key "shared_tags", "releases"
 end

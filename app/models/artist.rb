@@ -12,7 +12,7 @@
 #  updated_at         :datetime         not null
 #  image_file_name    :string
 #  image_content_type :string
-#  image_file_size    :integer
+#  image_file_size    :bigint(8)
 #  image_updated_at   :datetime
 #  slug               :string
 #  website            :string
@@ -32,7 +32,7 @@ class Artist < ApplicationRecord
   has_many :artist_releases
   has_many :releases, through: :artist_releases, dependent: :destroy
 
-  has_many :tags
+  has_and_belongs_to_many :tags
 
   has_attached_file :image, styles: {
                               thumb: "100x100>",

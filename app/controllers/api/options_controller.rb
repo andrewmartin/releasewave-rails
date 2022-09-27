@@ -26,6 +26,6 @@ class Api::OptionsController < ApplicationController
   end
 
   def option_params
-    params.require(:option).permit(:featured_date_window_before, :featured_date_window_after)
+    params.require(:option).permit(:featured_date_window_before, :featured_date_window_after, :data)
   end
 end

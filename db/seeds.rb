@@ -8,10 +8,10 @@
 
 puts "creating admin users"
 [
-  'hello@andrewmart.in',
+  "hello@andrewmart.in",
 ].each do |email|
-  User.find_or_create_by!(email: email) do | user |
-    user.password = ENV['ADMIN_PASSWORD']
+  User.find_or_create_by!(email: email) do |user|
+    user.password = ENV["ADMIN_PASSWORD"]
     user.is_admin = true
   end
 end
@@ -22,10 +22,10 @@ Artist.destroy_all
 50.times do
   r = Release.new({
     name: Faker::Music.unique.album,
-    description: '<p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Nisi, eius accusamus minima quos perspiciatis at sed, illum dolorum delectus ut eaque tempora nesciunt maxime sint totam maiores aliquid placeat harum!</p>',
-    buy: '#',
+    description: "<p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Nisi, eius accusamus minima quos perspiciatis at sed, illum dolorum delectus ut eaque tempora nesciunt maxime sint totam maiores aliquid placeat harum!</p>",
+    buy: "#",
     release_date: Faker::Date.forward([*5..95].sample),
-    featured: [true, false].sample
+    featured: [true, false].sample,
   })
 
   r.save!
@@ -37,13 +37,14 @@ Artist.destroy_all
 
   a = Artist.new({
     name: Faker::Music.unique.band,
-    facebook: '#',
-    spotify: '#',
-    soundcloud: '#',
-    website: '#',
-    youtube: '#',
-    itunes: '#',
-    twitter: '#',
+    facebook: "#",
+    spotify: "#",
+    soundcloud: "#",
+    website: "#",
+    youtube: "#",
+    itunes: "#",
+    twitter: "#",
+    instagram: "#",
   })
   a.save!
   r.artist_releases.create(artist_id: a.id)

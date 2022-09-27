@@ -11,7 +11,7 @@
 #  updated_at         :datetime         not null
 #  image_file_name    :string
 #  image_content_type :string
-#  image_file_size    :integer
+#  image_file_size    :bigint(8)
 #  image_updated_at   :datetime
 #  slug               :string
 #  buy                :string
@@ -23,7 +23,13 @@ class Release < ApplicationRecord
   extend FriendlyId
   friendly_id :name, use: :slugged
 
-  has_many :tags
+  has_many :artist_releases
+  has_many :artists, through: :artist_releases, dependent: :destroy
+
+  has_many :release_embeds
+  has_many :embeds, through: :release_embeds, dependent: :destroy
+
+  has_many :reviews
 
   scope :ranged, ->(start_date, end_date) {
           where(release_date: start_date..end_date) if start_date.present? and end_date.present?
@@ -43,14 +49,6 @@ class Release < ApplicationRecord
 
   scope :orderByReleaseDate, -> { order(release_date: :desc) }
   scope :orderByReleaseDateReversed, -> { order(release_date: :asc) }
-
-  has_many :artist_releases
-  has_many :artists, through: :artist_releases, dependent: :destroy
-
-  has_many :release_embeds
-  has_many :embeds, through: :release_embeds, dependent: :destroy
-
-  has_many :reviews
 
   has_attached_file :image, styles: {
                               thumb: "100x100>",
