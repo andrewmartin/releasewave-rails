@@ -22,6 +22,7 @@ Rails.application.routes.draw do
       get "artists/:artistSlug/releases", to: "artists#releases"
 
       resources :artists
+      resources :media
       resources :releases do
         resources :reviews
       end

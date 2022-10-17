@@ -8,7 +8,7 @@
 
 puts "creating admin users"
 [
-  "hello@andrewmart.in",
+  "andrew@releasewave.com",
 ].each do |email|
   User.find_or_create_by!(email: email) do |user|
     user.password = ENV["ADMIN_PASSWORD"]

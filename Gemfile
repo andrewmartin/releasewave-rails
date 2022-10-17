@@ -6,6 +6,8 @@ git_source(:github) do |repo_name|
 end
 
 gem 'schema2type'
+gem 'active_storage_base64'
+gem "image_processing", ">= 1.2"
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '~> 5.2'
