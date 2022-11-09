@@ -5,8 +5,9 @@ class Api::MediaController < ApplicationController
   before_action :set_media, except: [:create, :index]
 
   def create
-    @media = Media.new
+    @media = Media.new(media_params.except(*[:image]))
     @media.image.attach(data: media_params[:image])
+    @media.caption = media_params[:caption] # TODO Cleanup
     @media.save!
   end
 
@@ -33,6 +34,6 @@ class Api::MediaController < ApplicationController
   end
 
   def media_params
-    params.require(:media).permit([:image])
+    params.require(:media).permit([:image, :caption])
   end
 end

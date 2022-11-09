@@ -7,5 +7,9 @@ json.items do
     json.url url_for(item.image)
     json.created_at item.created_at
     json.updated_at item.updated_at
+    json.width item.width
+    json.height item.height
+    json.caption item.caption
+    json.id item.id
   end
 end
