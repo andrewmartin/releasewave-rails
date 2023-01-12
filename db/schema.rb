@@ -38,10 +38,13 @@ ActiveRecord::Schema.define(version: 2022_11_02_224639) do
 
   create_table "articles", force: :cascade do |t|
     t.string "title"
-    t.string "content"
+    t.string "type"
+    t.text "content"
+    t.bigint "artist_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "slug"
+    t.index ["artist_id"], name: "index_articles_on_artist_id"
     t.index ["slug"], name: "index_articles_on_slug", unique: true
   end
 
@@ -62,7 +65,7 @@ ActiveRecord::Schema.define(version: 2022_11_02_224639) do
     t.datetime "updated_at", null: false
     t.string "image_file_name"
     t.string "image_content_type"
-    t.bigint "image_file_size"
+    t.integer "image_file_size"
     t.datetime "image_updated_at"
     t.string "slug"
     t.string "website"
@@ -135,7 +138,7 @@ ActiveRecord::Schema.define(version: 2022_11_02_224639) do
     t.datetime "updated_at", null: false
     t.string "image_file_name"
     t.string "image_content_type"
-    t.bigint "image_file_size"
+    t.integer "image_file_size"
     t.datetime "image_updated_at"
     t.string "slug"
     t.string "buy"

@@ -17,11 +17,11 @@ class Api::OptionsController < ApplicationController
   private
 
   def set_option
-    @option = Option.find_by(name: "global")
+    @option = Option.find_by(name: "releaseWaveGlobalOptions")
   end
 
   def prepare_option
-    @option = Option.find_or_create_by!(name: "global")
+    @option = Option.find_or_create_by!(name: "releaseWaveGlobalOptions")
     @option.save!
   end
 

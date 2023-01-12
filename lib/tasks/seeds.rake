@@ -3,15 +3,14 @@
 namespace :db do
   desc "seed option"
   task seedOption: [:environment] do
-    puts "seeding options"
-    @option = Option.find_or_create_by!(name: "global")
+    @option = Option.find_or_create_by!(name: "releaseWaveGlobalOptions")
     if @option.data.nil?
-      @data = "{
-        featured_date_before: 25,
-        featured_date_after: 25,
-        upcoming_date_before: 25,
-        upcoming_date_after: 25
-        }"
+      @data = '{
+        "featured_date_before": 30,
+        "featured_date_after": 30,
+        "upcoming_date_before": 21,
+        "upcoming_date_after": 21
+        }'
       @option.update!(data: @data)
       puts "updated option with defaults: #{@data}"
     else
