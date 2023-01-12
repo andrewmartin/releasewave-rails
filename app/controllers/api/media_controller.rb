@@ -7,7 +7,7 @@ class Api::MediaController < ApplicationController
   def create
     @media = Media.new(media_params.except(*[:image]))
     @media.image.attach(data: media_params[:image])
-    @media.caption = media_params[:caption] # TODO Cleanup
+    # @media.caption = media_params[:caption] # TODO Cleanup
     @media.save!
   end
 
