@@ -7,4 +7,6 @@ A backend service for Release Wave, a curated music site.
 - Copy `./config/application.yml.example` to `./config/application.yml` and place in the proper variables.
 - `bundle exec rails db:migrate`
 - `bundle exec rails db:seed`
+- `rake db:seedOption`
+- `bundle exec rails s`
 - `bundle exec rails s`

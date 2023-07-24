@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_11_02_224639) do
+ActiveRecord::Schema.define(version: 2023_07_24_163429) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -55,6 +55,13 @@ ActiveRecord::Schema.define(version: 2022_11_02_224639) do
     t.index ["release_id"], name: "index_artist_releases_on_release_id"
   end
 
+  create_table "artist_tags", force: :cascade do |t|
+    t.bigint "artist_id"
+    t.bigint "tag_id"
+    t.index ["artist_id"], name: "index_artist_tags_on_artist_id"
+    t.index ["tag_id"], name: "index_artist_tags_on_tag_id"
+  end
+
   create_table "artists", force: :cascade do |t|
     t.string "name"
     t.string "bandcamp"
@@ -65,7 +72,7 @@ ActiveRecord::Schema.define(version: 2022_11_02_224639) do
     t.datetime "updated_at", null: false
     t.string "image_file_name"
     t.string "image_content_type"
-    t.integer "image_file_size"
+    t.bigint "image_file_size"
     t.datetime "image_updated_at"
     t.string "slug"
     t.string "website"
@@ -138,7 +145,7 @@ ActiveRecord::Schema.define(version: 2022_11_02_224639) do
     t.datetime "updated_at", null: false
     t.string "image_file_name"
     t.string "image_content_type"
-    t.integer "image_file_size"
+    t.bigint "image_file_size"
     t.datetime "image_updated_at"
     t.string "slug"
     t.string "buy"

@@ -1,6 +1,6 @@
 Rails.application.configure do
   # Settings specified here will take precedence over those in config/application.rb.
-
+  $stdout.sync = true
   config.active_storage.service = :local
 
   config.paperclip_defaults = {
